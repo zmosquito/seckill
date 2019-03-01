@@ -33,7 +33,7 @@
 
 ## 开发环境
 
-- **操作系统**：Windows 8
+- **操作系统**：Windows 10
 - **IDE工具**：Eclipse
 - **JDK**：JDK1.7
 - **中间件**：Tomcat 7.0
