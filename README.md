@@ -247,9 +247,9 @@ Mapper自动实现DAO（也就是DAO只需要设计接口，不需要去写实�
 
 > **创建一个目录存放Mybatis的SQL映射**
 
-按照Maven的规范，SQL映射文件应该放在==src/main/resources==包下，在该包下建立==mapper==目录，用来存放映射DAO接口的XML文件。这样Maven在编译时就会自动将==src/main/resources==下的这些配置文件编译进来。
+按照Maven的规范，SQL映射文件应该放在src/main/resources包下，在该包下建立mapper目录，用来存放映射DAO接口的XML文件。这样Maven在编译时就会自动将src/main/resources下的这些配置文件编译进来。
 
-我们也可以按照原本的习惯，在==src/main/java==下建立==com.lewis.mapper==包，将这些SQL映射存放到这里。由于Maven默认不会编译==src/main/java==下除源码以外的文件，所以需要在pom.xml中进行额外的配置。
+我们也可以按照原本的习惯，在src/main/java下建立com.lewis.mapper包，将这些SQL映射存放到这里。由于Maven默认不会编译src/main/java下除源码以外的文件，所以需要在pom.xml中进行额外的配置。
 
 ```xml
 <build>
@@ -272,7 +272,7 @@ Mapper自动实现DAO（也就是DAO只需要设计接口，不需要去写实�
 
 在本项目中，我是采用的第二种方式存放Mybatis的SQL映射。（只是将映射DAO的mapper文件放在java包下，其他的关于Spring、MyBatis等的配置文件还是放在resources包下）。
 
-> **在==src/main/resources==目录下配置mybatis-config.xml（配置MyBatis的全局属性）**
+> **在src/main/resources目录下配置mybatis-config.xml（配置MyBatis的全局属性）**
 
 打开MyBatis的[官方文档](http://www.mybatis.org/mybatis-3/zh/index.html)（MyBatis的官方文档做的非常友好，提供了非常多版本的国际化支持），选择` 入门`，找到MyBatis全局配置，里面有XML的规范（XML的标签约束dtd文件），拷入到项目的MyBatis全局配置文件中，开始配置MyBatis，如下：
 
@@ -301,7 +301,7 @@ Mapper自动实现DAO（也就是DAO只需要设计接口，不需要去写实�
 </configuration>
 ```
 
-> **在==src/main/java==目录下的==com.lewis.mapper==包里创建SeckillDao.xml**
+> **在src/main/java目录下的com.lewis.mapper包里创建SeckillDao.xml**
 
 ```xml
 <!DOCTYPE mapper
@@ -344,7 +344,7 @@ Mapper自动实现DAO（也就是DAO只需要设计接口，不需要去写实�
 </mapper>
 ```
 
-> **在==src/main/java==目录下的==com.lewis.mapper==包里创建SuccessKilledDao.xml**
+> **在src/main/java目录下的com.lewis.mapper包里创建SuccessKilledDao.xml**
 
 ```xml
 <!DOCTYPE mapper
@@ -385,7 +385,7 @@ Mapper自动实现DAO（也就是DAO只需要设计接口，不需要去写实�
 
 - mybatis整合spring技巧
 
-在==resources==目录下创建一个新的目录==spring==(存放所有Spring相关的配置)
+在resources目录下创建一个新的目录spring(存放所有Spring相关的配置)
 
 > **在resources包下创建jdbc.properties，用于配置数据库的连接信息**
 
@@ -396,7 +396,7 @@ jdbc.username=root
 password=123
 ```
 
-> **在==resources/spring==目录下创建Spring关于DAO层的配置文件spring-dao.xml**
+> **在resources/spring目录下创建Spring关于DAO层的配置文件spring-dao.xml**
 
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
@@ -560,10 +560,10 @@ post /seckill/{id}/{md5}/execution	执行秒杀
 注意：
 
 - 这里的Servlet版本是3.0，对应Tomcat7.0版本
-- 由于我们的配置文件都是以==spring-==开头命名的，所以可以用通配符*一次性全部加载
-- ==url-pattern==设置为==/==，这是使用了Restful的规范；在使用Struts框架时我们配置的是*.do之类的，这是一种比较丑陋的表达方式
+- 由于我们的配置文件都是以spring-开头命名的，所以可以用通配符*一次性全部加载
+- url-pattern设置为/，这是使用了Restful的规范；在使用Struts框架时我们配置的是*.do之类的，这是一种比较丑陋的表达方式
 
-> **==src/main/resources/spring==包下建立spring-web.xml**
+> **src/main/resources/spring包下建立spring-web.xml**
 
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
@@ -626,7 +626,7 @@ SeckillResult是一个VO类(View Object)，属于DTO层，用来封装json结果
 
 由于项目的前端页面都是由Bootstrap开发的,所以需要先去下载Bootstrap或者是使用在线的CDN服务。而Bootstrap又是依赖于jQuery的，所以需要先引入jQuery。
 
-> **在==webapp==下建立==resources==目录，接着建立==script==目录，建立seckill.js**
+> **在webapp下建立resources目录，接着建立script目录，建立seckill.js**
 
 ```javascript
 //存放主要交互逻辑的js代码
