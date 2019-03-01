@@ -483,17 +483,70 @@ entity：用于业务数据的封装，比如数据库中的数据。
 
 - springIOC配置技巧
 
+> **为什么用IOC**
 
+- 对象创建统一托管，（之前是new）
+- 规范的生命周期管理。（init，销毁等）
+- 灵活的依赖注入(第三方框架自动整合，注解，编程)
+- 一致的获取对象
 
+> **Spring-IOC注入方式和场景**
 
+- XML方式：主要用于配置第三方类库或需要命名空间配置
+- 注解：自己编写的类，直接在代码中使用注解，如@Service，@Controller
+- Java配置类：需要通过代码控制对象创建逻辑的场景，如自定义修改依赖类库
 
+> **Spring-IOC配置**
 
+通过Spring提供的组件自动扫描机制，可以在类路径下寻找标注了上述注解的类，并把这些类纳入进spring容器中管理，这些注解的作用和在xml文件中使用bean节点配置组件时一样的。
 
+```
+<context:component-scan base-package=”xxx.xxx.xxx”>
+```
 
+component-scan标签默认情况下自动扫描指定路径下的包(含所有子包)，将带有@Component、@Repository、@Service、@Controller标签的类自动注册到spring容器。getBean的默认名称是类名（头字母小写），如果想自定义，可以@Service(“aaaaa”)这样来指定。这种bean默认是“singleton”的，如果想改变，可以使用@Scope(“prototype”)来改变。
 
+当使用`<context:component-scan/>`后，就可以将`<context:annotation-config/>`移除了，前者包含了后者。
 
+另外，@Resource，@Inject 是J2EE规范的一些注解
+
+@Autowired是Spring的注解，可以对类成员变量、方法及构造函数进行标注，完成自动装配的工作。通过 @Autowired的使用来消除setter/getter方法，默认按类型装配，如果想使用名称装配可以结合@Qualifier注解进行使用，如下：
+
+```
+@Autowired() @Qualifier("baseDao")
+private BaseDao baseDao; 
+```
 
 - spring声明式事务使用和理解
+
+> **什么是声明式事务？**
+
+**目的**：交给第三方框架spring来管理，**解脱事务代码**。(开发时不用关注什么时候开启事务，什么时候提交，什么时候回滚)
+
+> **声明式事务使用方法**
+
+- 在Spring早期版本（2.0）中是使用ProxyFactoryBean+XMl方式来配置事务。
+- 在Spring配置文件使用tx:advice+aop命名空间，好处就是一次配置永久生效，你无须去关心中间出的问题，不过出错了你很难找出来在哪里出了问题。
+- 注解@Transactional的方式，注解可以在方法定义、接口定义、类定义、public方法上，但是不能注解在private、final、static等方法上，因为Spring的事务管理默认是使用Cglib动态代理的： 
+
+1. private方法因为访问权限限制，无法被子类覆盖
+2. final方法无法被子类覆盖
+3. static是类级别的方法，无法被子类覆盖
+4. protected方法可以被子类覆盖，因此可以被动态字节码增强
+
+> **不能被Spring AOP事务增强的方法**
+
+| 序号 | 动态代理策略        | 不能被事务增强的方法                                         |
+| ---- | ------------------- | ------------------------------------------------------------ |
+| 1    | 基于接口的动态代理  | 除了public以外的所有方法，并且public static的方法也不能被增强 |
+| 2    | 基于Cglib的动态代理 | private、static、final的方法                                 |
+
+> **关于Spring的组件注解、注入注解**
+
+- @Component：标识一个组件，当不知道是什么组件，或者该组件不好归类时使用该注解
+- @Service：标识业务层组件
+- @Repository：标识DAO层组件
+- @Controller：标识控制层组件
 
 ### WEB技术
 
@@ -802,11 +855,243 @@ URL: {
 
 ### 并发优化
 
-- 系统瓶颈点分析
-- 事务，锁，网络延迟理解
-- 前端，CDN，缓存等理解使用
+- 前端控制
 
-QAQ，好多啊，正在逐步更新中。。。
+暴露接口，按钮防重复（点击一次按钮后就变成灰色，禁止重复点击按钮）
+
+- 动静态数据分离
+
+CDN缓存，后端缓存
+
+> **为什么使用Redis**
+
+Redis属于NoSQL，即非关系型数据库，它是key-value型数据库，是直接在内存中进行存取数据的，所以有着很高的性能。
+
+利用Redis可以减轻MySQL服务器的压力，减少了跟数据库服务器的通信次数。秒杀的瓶颈就在于跟数据库服务器的通信速度（MySQL本身的主键查询非常快）
+
+> **为什么不用Redis的hash来存储对象？**
+
+第一：通过Jedis储存对象的方式有大概三种
+
+本项目采用的方式：将对象序列化成byte字节，最终存byte字节；
+对象转hashmap，也就是你想表达的hash的形式，最终存map；
+对象转json，最终存json，其实也就是字符串。
+
+第二：其实如果你是平常的项目，并发不高，三个选择都可以，这种情况下以hash的形式更加灵活，可以对象的单个属性，但是问题来了，在秒杀的场景下，三者的效率差别很大。
+
+第三：结果如下：
+
+|  10w数据  | 时间 | 内存占用 |
+| :-------: | :--: | :------: |
+|  存json   | 10s  |   14M    |
+|  存byte   |  6s  |    6M    |
+| 存jsonMap | 10s  |   20M    |
+| 存byteMap |  4s  |    4M    |
+|  取json   |  7s  |          |
+|  取byte   |  4s  |          |
+| 取jsonMap |  7s  |          |
+| 取byteMap |  4s  |          |
+
+第四：你该说了，bytemap最快啊，为啥不用啊，因为项目用了超级强悍的序列化工具啊。
+
+- 事务竞争优化
+
+减少事务行级锁的持有时间
+
+> **sql语句的简单优化**
+
+**优化SeckillServiceImpl的executeSeckill()**
+
+用户的秒杀操作分为两步：减库存、插入购买明细，我们在这里进行简单的优化，就是将原本先update（减库存）再进行insert（插入购买明细）的步骤改成：先insert再update。
+
+```java
+public SeckillExecution executeSeckill(long seckillId, long userPhone, String md5) throws SeckillException,
+        RepeatKillException, SeckillCloseException {
+
+    if (md5 == null || !md5.equals(getMD5(seckillId))) {
+        throw new SeckillException("seckill data rewrite");// 秒杀数据被重写了
+    }
+    // 执行秒杀逻辑:减库存+增加购买明细
+    Date nowTime = new Date();
+
+    try {
+
+        // 否则更新了库存，秒杀成功,增加明细
+        int insertCount = successKilledDao.insertSuccessKilled(seckillId, userPhone);
+        // 看是否该明细被重复插入，即用户是否重复秒杀
+        if (insertCount <= 0) {
+            throw new RepeatKillException("seckill repeated");
+        } else {
+
+            // 减库存,热点商品竞争
+            int updateCount = seckillDao.reduceNumber(seckillId, nowTime);
+            if (updateCount <= 0) {
+                // 没有更新库存记录，说明秒杀结束 rollback
+                throw new SeckillCloseException("seckill is closed");
+            } else {
+                // 秒杀成功,得到成功插入的明细记录,并返回成功秒杀的信息 commit
+                SuccessKilled successKilled = successKilledDao.queryByIdWithSeckill(seckillId, userPhone);
+                return new SeckillExecution(seckillId, SeckillStatEnum.SUCCESS, successKilled);
+            }
+        }
+    } catch (SeckillCloseException e1) {
+        throw e1;
+    } catch (RepeatKillException e2) {
+        throw e2;
+    } catch (Exception e) {
+        logger.error(e.getMessage(), e);
+        // 将编译期异常转化为运行期异常
+        throw new SeckillException("seckill inner error :" + e.getMessage());
+    }
+
+}
+```
+
+> **为什么要先insert再update**
+
+首先是在更新操作的时候给行加锁，插入并不会加锁，如果更新操作在前，那么就需要执行完更新和插入以后事务提交或回滚才释放锁。而如果插入在前，更新在后，那么只有在更新时才会加行锁，之后在更新完以后事务提交或回滚释放锁。
+
+在这里，插入是可以并行的，而更新由于会加行级锁是串行的。
+
+也就是说是更新在前加锁和释放锁之间两次的网络延迟和GC，如果插入在前则加锁和释放锁之间只有一次的网络延迟和GC，也就是减少的持有锁的时间。
+
+这里先insert并不是忽略了库存不足的情况，而是因为insert和update是在同一个事务里，光是insert并不一定会提交，只有在update成功才会提交，所以并不会造成过量插入秒杀成功记录。
+
+> **深度优化**
+
+**写一个存储过程procedure，然后在MySQL控制台里执行它**
+
+```mysql
+-- 秒杀执行储存过程
+DELIMITER $$ -- 将定界符从;转换为$$
+-- 定义储存过程
+-- 参数： in输入参数   out输出参数
+-- row_count() 返回上一条修改类型sql(delete,insert,update)的影响行数
+-- row_count:0:未修改数据 ; >0:表示修改的行数； <0:sql错误
+CREATE PROCEDURE `seckill`.`execute_seckill`
+  (IN v_seckill_id BIGINT, IN v_phone BIGINT,
+   IN v_kill_time  TIMESTAMP, OUT r_result INT)
+  BEGIN
+    DECLARE insert_count INT DEFAULT 0;
+    START TRANSACTION;
+    INSERT IGNORE INTO success_killed
+    (seckill_id, user_phone, state)
+    VALUES (v_seckill_id, v_phone, 0);
+    SELECT row_count() INTO insert_count;
+    IF (insert_count = 0) THEN
+      ROLLBACK;
+      SET r_result = -1;
+    ELSEIF (insert_count < 0) THEN
+        ROLLBACK;
+        SET r_result = -2;
+    ELSE
+      UPDATE seckill
+      SET number = number - 1
+      WHERE seckill_id = v_seckill_id
+            AND end_time > v_kill_time
+            AND start_time < v_kill_time
+            AND number > 0;
+      SELECT row_count() INTO insert_count;
+      IF (insert_count = 0) THEN
+        ROLLBACK;
+        SET r_result = 0;
+      ELSEIF (insert_count < 0) THEN
+          ROLLBACK;
+          SET r_result = -2;
+      ELSE
+        COMMIT;
+        SET r_result = 1;
+      END IF;
+    END IF;
+  END;
+$$
+-- 储存过程定义结束
+-- 将定界符重新改为;
+DELIMITER ;
+
+-- 定义一个用户变量r_result
+SET @r_result = -3;
+-- 执行储存过程
+CALL execute_seckill(1003, 13502178891, now(), @r_result);
+-- 获取结果
+SELECT @r_result;
+```
+
+> **在SeckillDao里添加调用存储过程的方法声明**
+
+```java
+/**
+ *  使用储存过程执行秒杀
+ * @param paramMap
+ */
+void killByProcedure(Map<String,Object> paramMap);
+```
+
+> **接着在SeckillDao.xml里添加该方法对应的sql语句**
+
+```mysql
+<!--调用储存过程 -->
+<select id="killByProcedure" statementType="CALLABLE">
+    CALL execute_seckill(
+        #{seckillId,jdbcType=BIGINT,mode=IN},
+        #{phone,jdbcType=BIGINT,mode=IN},
+        #{killTime,jdbcType=TIMESTAMP,mode=IN},
+        #{result,jdbcType=INTEGER,mode=OUT}
+    )
+</select>
+```
+
+> **在SeckillService接口里添加一个方法声明**
+
+```java
+/**
+ * 调用存储过程来执行秒杀操作，不需要抛出异常
+ * 
+ * @param seckillId 秒杀的商品ID
+ * @param userPhone 手机号码
+ * @param md5 md5加密值
+ * @return 根据不同的结果返回不同的实体信息
+ */
+SeckillExecution executeSeckillProcedure(long seckillId,long userPhone,String md5);
+```
+
+> **在SeckillServiceImpl里实现这个方法**
+
+```java
+@Override
+public SeckillExecution executeSeckillProcedure(long seckillId, long userPhone, String md5) {
+    if (md5 == null || !md5.equals(getMD5(seckillId))) {
+        return new SeckillExecution(seckillId, SeckillStatEnum.DATE_REWRITE);
+    }
+    Date killTime = new Date();
+    Map<String, Object> map = new HashMap<>();
+    map.put("seckillId", seckillId);
+    map.put("phone", userPhone);
+    map.put("killTime", killTime);
+    map.put("result", null);
+    // 执行储存过程,result被复制
+    seckillDao.killByProcedure(map);
+    // 获取result
+    int result = MapUtils.getInteger(map, "result", -2);
+    if (result == 1) {
+        SuccessKilled successKilled = successKilledDao.queryByIdWithSeckill(seckillId, userPhone);
+        return new SeckillExecution(seckillId, SeckillStatEnum.SUCCESS, successKilled);
+    } else {
+        return new SeckillExecution(seckillId, SeckillStatEnum.stateOf(result));
+    }
+}
+```
+
+> **存储过程优化总结**
+
+1. 存储过程优化:事务行级锁持有的时间
+2. 不要过度依赖存储过程
+3. 简单的逻辑依赖存储过程
+4. QPS:一个秒杀单6000/qps
+
+经过简单生sql语句优化和深度优化之后，本项目大概能达到一个秒杀单6000qps，这个数据对于一个秒杀商品来说其实已经挺ok了，注意这里是指同一个秒杀商品6000qps，如果是不同商品不存在行级锁竞争的问题。
+
+QAQ，好多啊，终于写完了。。。
 
 ## 项目截图
 
