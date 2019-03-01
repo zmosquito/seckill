@@ -140,8 +140,7 @@ public class SeckillServiceImpl implements SeckillService {
 		}
 
 	}
-	
-	@Override
+
 	public SeckillExecution executeSeckillProcedure(long seckillId, long userPhone, String md5) {
 		if (md5 == null || !md5.equals(getMD5(seckillId))) {
 			return new SeckillExecution(seckillId, SeckillStatEnum.DATE_REWRITE);
