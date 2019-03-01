@@ -783,7 +783,7 @@ var seckill = {
 
 由于本人的Eclipse内嵌的Tomcat设置的原因，我需要在URL里的所有路径前加上`/seckill`（我的项目名）才可以正常映射到Controller里对应的方法，如下
 
-```json
+```
 //封装秒杀相关ajax的url
 URL: {
     now: function () {
