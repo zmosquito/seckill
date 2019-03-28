@@ -1097,35 +1097,35 @@ QAQ，好多啊，终于写完了。。。
 
 #### 秒杀列表
 
-![秒杀列表](https://blogs-image.oss-cn-beijing.aliyuncs.com/seckill/list.jpg?Expires=1551363049&OSSAccessKeyId=TMP.AQFLeOJiqSWC2An98cjOxZfks3_hcNsf8aHkLiZd7K8efvee1A52qpIF51O2MC4CFQCJ1SCNRdBlMDTrMVGQwEDkXWHAMwIVAP6jjwPMRpUmxtDLY0diMyVsi-0r&Signature=Tu8tGLV3YuDGiQYY8IKvJPdN4As%3D)
+![秒杀列表](https://blogs-image.oss-cn-beijing.aliyuncs.com/seckill/list.jpg)
 
 #### 秒杀详情页
 
-![秒杀详情页](https://blogs-image.oss-cn-beijing.aliyuncs.com/seckill/detail.jpg?Expires=1551363098&OSSAccessKeyId=TMP.AQFLeOJiqSWC2An98cjOxZfks3_hcNsf8aHkLiZd7K8efvee1A52qpIF51O2MC4CFQCJ1SCNRdBlMDTrMVGQwEDkXWHAMwIVAP6jjwPMRpUmxtDLY0diMyVsi-0r&Signature=zehmk7iaDwpuQm3Bw1TAoQuB%2Bcg%3D)
+![秒杀详情页](https://blogs-image.oss-cn-beijing.aliyuncs.com/seckill/detail.jpg)
 
 #### 错误提示
 
-![错误提示](https://blogs-image.oss-cn-beijing.aliyuncs.com/seckill/error.jpg?Expires=1551363164&OSSAccessKeyId=TMP.AQFLeOJiqSWC2An98cjOxZfks3_hcNsf8aHkLiZd7K8efvee1A52qpIF51O2MC4CFQCJ1SCNRdBlMDTrMVGQwEDkXWHAMwIVAP6jjwPMRpUmxtDLY0diMyVsi-0r&Signature=WzVoQ0Aw8aVORpnu9f0os%2F%2B6JsU%3D)
+![错误提示](https://blogs-image.oss-cn-beijing.aliyuncs.com/seckill/error.jpg)
 
 #### 开始秒杀
 
-![开始秒杀](https://blogs-image.oss-cn-beijing.aliyuncs.com/seckill/seckill.jpg?Expires=1551363364&OSSAccessKeyId=TMP.AQFLeOJiqSWC2An98cjOxZfks3_hcNsf8aHkLiZd7K8efvee1A52qpIF51O2MC4CFQCJ1SCNRdBlMDTrMVGQwEDkXWHAMwIVAP6jjwPMRpUmxtDLY0diMyVsi-0r&Signature=f%2B%2F9BSg9tdMH7FUck8ue6avL8aA%3D)
+![开始秒杀](https://blogs-image.oss-cn-beijing.aliyuncs.com/seckill/seckill.jpg)
 
 #### 秒杀成功
 
-![秒杀成功](https://blogs-image.oss-cn-beijing.aliyuncs.com/seckill/seckill-success.jpg?Expires=1551363376&OSSAccessKeyId=TMP.AQFLeOJiqSWC2An98cjOxZfks3_hcNsf8aHkLiZd7K8efvee1A52qpIF51O2MC4CFQCJ1SCNRdBlMDTrMVGQwEDkXWHAMwIVAP6jjwPMRpUmxtDLY0diMyVsi-0r&Signature=GW4WhrMPBz2b9PgrMfPxmtlfToM%3D)
+![秒杀成功](https://blogs-image.oss-cn-beijing.aliyuncs.com/seckill/seckill-success.jpg)
 
 #### 重复秒杀
 
-![重复秒杀](https://blogs-image.oss-cn-beijing.aliyuncs.com/seckill/repeat-seckill.jpg?Expires=1551363411&OSSAccessKeyId=TMP.AQFLeOJiqSWC2An98cjOxZfks3_hcNsf8aHkLiZd7K8efvee1A52qpIF51O2MC4CFQCJ1SCNRdBlMDTrMVGQwEDkXWHAMwIVAP6jjwPMRpUmxtDLY0diMyVsi-0r&Signature=%2BEPwpEIBP672wCQtRisKCidpBIk%3D)
+![重复秒杀](https://blogs-image.oss-cn-beijing.aliyuncs.com/seckill/repeat-seckill.jpg)
 
 #### 秒杀倒计时
 
-![秒杀倒计时](https://blogs-image.oss-cn-beijing.aliyuncs.com/seckill/countdown.jpg?Expires=1551363436&OSSAccessKeyId=TMP.AQFLeOJiqSWC2An98cjOxZfks3_hcNsf8aHkLiZd7K8efvee1A52qpIF51O2MC4CFQCJ1SCNRdBlMDTrMVGQwEDkXWHAMwIVAP6jjwPMRpUmxtDLY0diMyVsi-0r&Signature=GIjVm0UGEh2r%2FepZJz9IlgbI8B4%3D)
+![秒杀倒计时](https://blogs-image.oss-cn-beijing.aliyuncs.com/seckill/countdown.jpg)
 
 #### 秒杀结束
 
-![秒杀结束](https://blogs-image.oss-cn-beijing.aliyuncs.com/seckill/stoped.jpg?Expires=1551363459&OSSAccessKeyId=TMP.AQFLeOJiqSWC2An98cjOxZfks3_hcNsf8aHkLiZd7K8efvee1A52qpIF51O2MC4CFQCJ1SCNRdBlMDTrMVGQwEDkXWHAMwIVAP6jjwPMRpUmxtDLY0diMyVsi-0r&Signature=Yrsa9AR7%2FDRDVfBld%2BtOPp7xCMA%3D)
+![秒杀结束](https://blogs-image.oss-cn-beijing.aliyuncs.com/seckill/stoped.jpgD)
 
 
 
