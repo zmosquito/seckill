@@ -1125,7 +1125,7 @@ QAQ，好多啊，终于写完了。。。
 
 #### 秒杀结束
 
-![秒杀结束](https://blogs-image.oss-cn-beijing.aliyuncs.com/seckill/stoped.jpgD)
+![秒杀结束](https://blogs-image.oss-cn-beijing.aliyuncs.com/seckill/stoped.jpg)
 
 
 
