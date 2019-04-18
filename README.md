@@ -669,11 +669,11 @@ SeckillResult是一个VO类(View Object)，属于DTO层，用来封装json结果
 
 > **前端页面流程**
 
-![前端页面流程](https://blogs-image.oss-cn-beijing.aliyuncs.com/seckill/process.jpg?Expires=1551413543&OSSAccessKeyId=TMP.AQHOpFLmWavLr74KLW_1XMq-0eEwe3B1qM_IN198Rnm4WWK6-_DKvhmTkw8JAAAwLAIUEOOx9kyjopQtXg0fZgXGXwHetgMCFAOtzFwzd3tCAfJu3O1Z4N1BJzxg&Signature=5ljsgfR4tvZz%2Fl1wDe2zsArVBuY%3D)
+![前端页面流程](https://blogs-image.oss-cn-beijing.aliyuncs.com/seckill/process.jpg)
 
 > **详情页流程逻辑**
 
-![详情页流程逻辑](https://blogs-image.oss-cn-beijing.aliyuncs.com/seckill/detail-logic.jpg?Expires=1551413596&OSSAccessKeyId=TMP.AQHOpFLmWavLr74KLW_1XMq-0eEwe3B1qM_IN198Rnm4WWK6-_DKvhmTkw8JAAAwLAIUEOOx9kyjopQtXg0fZgXGXwHetgMCFAOtzFwzd3tCAfJu3O1Z4N1BJzxg&Signature=wyfIEqDpn5kFbKmmHDUHnYgLsc8%3D)
+![详情页流程逻辑](https://blogs-image.oss-cn-beijing.aliyuncs.com/seckill/detail-logic.jpg)
 
 - Bootstrap和JS使用
 
